@@ -1,6 +1,6 @@
 # Self-Assessment  of Code
 
-# Self-Assessment 
+# Self-Assessment - Verner Etola
 
 ### Validation for Email and Phone Number:
 
