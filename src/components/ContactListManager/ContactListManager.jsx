@@ -21,16 +21,27 @@ function ContactListManager() {
   function handlePhoneChange(event) {
     setPhone(event.target.value);
   }
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+
+  // Validate phone number format (allowing spaces, dashes, parentheses)
+  function isValidPhone(phone) {
+    return /^[0-9\-\(\)\s]+$/.test(phone) && phone.replace(/\D/g, '').length >= 10;
+  }
 
   // Add a new contact to the list
   function addContact() {
-    if (name.trim() !== "" && email.trim() !== "") {
-      setContacts((c) => [...c, { name, email, phone }]);
+    if (name.trim() !== "" && isValidEmail(email) && isValidPhone(phone)) {
+      setContacts((c) => [...c, { id: Date.now(), name, email, phone }]);
       setName("");
       setEmail("");
       setPhone("");
+    } else {
+      alert("Please enter valid name, email, and phone number.");
     }
   }
+
 
   // Delete a contact from the list
   function deleteContact(index) {
@@ -64,7 +75,7 @@ function ContactListManager() {
       </div>
       <ol>
         {contacts.map((contact, index) => (
-          <li key={index}>
+          <li key={contact.id}>
             {contact.name} - {contact.email} - {contact.phone}
             <button onClick={() => deleteContact(index)}>Delete</button>
           </li>
