@@ -51,7 +51,7 @@
   
   .book-collection li button {
     background-color: #e74c3c;
-    border-radius: 50%;
+    border-radius: 4px;
     border: none;
     color: white;
     cursor: pointer;
