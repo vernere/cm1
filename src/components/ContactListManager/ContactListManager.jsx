@@ -21,6 +21,8 @@ function ContactListManager() {
   function handlePhoneChange(event) {
     setPhone(event.target.value);
   }
+
+    // Handle input change for email
   function isValidEmail(email) {
     return /\S+@\S+\.\S+/.test(email);
   }
