@@ -1,33 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import './RecipeManager.css';
 
 function RecipeManager() {
   const [recipes, setRecipes] = useState([]);
-  const [name, setName] = useState("");
-  const [ingredients, setIngredients] = useState("");
-  const [instructions, setInstructions] = useState("");
+  const [newRecipe, setNewRecipe] = useState({
+    name: "",
+    ingredients: [],
+    instructions: [],
+  })
 
-  // Handle input change for name
-  function handleNameChange(event) {
-    setName(event.target.value);
+  // Handle input change for name and instructions
+  function handleInputChange(event) {
+    const { name, value } = event.target;
+    setNewRecipe({ ...newRecipe, [name]: value });
   }
 
   // Handle input change for ingredients
-  function handleIngredientsChange(event) {
-    setIngredients(event.target.value);
-  }
-
-  // Handle input change for instructions
-  function handleInstructionsChange(event) {
-    setInstructions(event.target.value);
+  function handleIngredientChange(event) {
+    setNewRecipe({ ...newRecipe, ingredients: event.target.value.split(',').map(ingredient => ingredient.trim()) });
   }
 
   // Add a new recipe to the list
   function addRecipe() {
-    if (name.trim() !== "" && ingredients.trim() !== "") {
-      setRecipes((r) => [...r, { name, ingredients, instructions }]);
-      setName("");
-      setIngredients(""); // Clear the input fields
-      setInstructions("");
+    if (newRecipe.name.trim() !== "" && newRecipe.ingredients.length > 0 && newRecipe.instructions.trim() !== "") {
+      setRecipes([...recipes, { ...newRecipe } ]);
+      setNewRecipe({ name: "", ingredients: [], instructions: [] });
     }
   }
 
@@ -43,34 +40,37 @@ function RecipeManager() {
       <div>
         <input
           type="text"
+          name="name"
           placeholder="Enter recipe name..."
-          value={name}
-          onChange={handleNameChange}
+          value={newRecipe.name}
+          onChange={handleInputChange}
         />
         <input
           type="text"
-          placeholder="Enter ingredients..."
-          value={ingredients}
-          onChange={handleIngredientsChange}
+          name="ingredients"
+          placeholder="Enter ingredients (comma-separated)..."
+          value={newRecipe.ingredients.join(',')}
+          onChange={handleIngredientChange}
         />
-        <input
-          type="text"
+        <textarea
+          name="instructions"
           placeholder="Enter instructions..."
-          value={instructions}
-          onChange={handleInstructionsChange}
+          value={newRecipe.instructions}
+          onChange={handleInputChange}
+          rows="4"
         />
         <button onClick={addRecipe}>Add Recipe</button>
       </div>
       <ol>
         {recipes.map((recipe, index) => (
           <li key={index}>
-            {recipe.name}: {recipe.ingredients}: {recipe.instructions}
+            Name: {recipe.name} Ingredients: {recipe.ingredients} Instructions: {recipe.instructions}
             <button onClick={() => deleteRecipe(index)}>Delete</button>
           </li>
         ))}
       </ol>
     </div>
-  );
+  )
 }
 
 export default RecipeManager;
