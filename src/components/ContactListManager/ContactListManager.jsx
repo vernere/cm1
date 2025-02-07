@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './ContactListManager.css';
+import './ContactListManager.css'
 
 function ContactListManager() {
   const [contacts, setContacts] = useState([]);
@@ -24,8 +24,7 @@ function ContactListManager() {
 
   // Add a new contact to the list
   function addContact() {
-    const phoneRegex = /^[0-9]{10}$/;
-    if (name.trim() !== "" && email.trim() !== "" && phoneRegex.test(phone)) {
+    if (name.trim() !== "" && email.trim() !== "") {
       setContacts((c) => [...c, { name, email, phone }]);
       setName("");
       setEmail("");
@@ -33,13 +32,12 @@ function ContactListManager() {
     }
   }
 
+  // Delete a contact from the list
   function deleteContact(index) {
-    if (index >= 0 && index < contacts.length) {
-      const updatedContacts = contacts.filter((_, i) => i !== index);
-      setContacts(updatedContacts);
-    }
+    const updatedContacts = contacts.filter((_, i) => i !== index);
+    setContacts(updatedContacts);
   }
-  
+
   return (
     <div className='contact-list'>
       <h1>Contact List Manager</h1>
